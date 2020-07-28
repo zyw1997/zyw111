@@ -1,0 +1,6 @@
+com\talkweb\dao\UserMapper.class
+com\talkweb\service\impl\UserServiceImpl.class
+com\talkweb\pojo\UserBean.class
+com\talkweb\service\UserService.class
+com\talkweb\controller\UserController.class
+com\talkweb\controller\TestController.class

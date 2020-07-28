@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.talkweb.dao.UserMapper">
+
+    <resultMap type="com.talkweb.pojo.UserBean" id="userResultMap">
+        <id property="user_tel" column="user_tel"/>
+        <result property="user_account" column="user_account"/>
+        <result property="user_nickname" column="user_nickname"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="login" parameterType="com.talkweb.pojo.UserBean" resultType="com.talkweb.pojo.UserBean">
+        SELECT * FROM user WHERE   user_account = "${user_account}" AND password = "${password}"
+    </select>
+
+    <select id="pageCount" resultType="int">
+        select count(*) from user
+    </select>
+
+    <select id="findUserByTel" parameterType="java.lang.String" resultType="com.talkweb.pojo.UserBean">
+        SELECT * FROM user WHERE  user_tel = "${_parameter}"
+    </select>
+
+    <select id="findUsers" parameterType="Map" resultType="com.talkweb.pojo.UserBean">
+        SELECT * FROM user LIMIT ${page.start},${page.pageSize}
+    </select>
+    <update id="updateUser" parameterType="Map">
+        update user set user_nickname = "${info.new_nickname}" where user_tel = "${info.tel}"
+    </update>
+    <insert id="addUser" parameterType="com.talkweb.pojo.UserBean" >
+        insert  into user values("${user_tel}","${user_account}","${user_nickname}","${password}")
+    </insert>
+    <delete id="delUsers" parameterType="List">
+        delete from user where user_tel in
+        <foreach collection="tels" item="item"  open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </delete>
+</mapper>
